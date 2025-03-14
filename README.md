@@ -22,7 +22,7 @@ looking for transport for his goods.
 # Development Environment
 
 The app was developed on Android Studio Ladybug Feature Drop | 2024.2.2 Patch 
-I imntegrated Google maps API
+I imntegrated Google maps API.
 
 I used Kotlin as my main language. 
 
