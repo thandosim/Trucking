@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,6 +10,9 @@
     tools:context=".FindTrucks">
 
     <!-- Heading -->
+    <!-- This TextView acts as the main heading for the screen.
+         It displays a bold and prominent title, "Find a Truck for Your Cargo."
+         Positioned at the top of the screen and centered horizontally. -->
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
@@ -23,6 +27,9 @@
         android:layout_marginTop="16dp" />
 
     <!-- Placeholder List of Trucks -->
+    <!-- A RecyclerView used to display the list of available trucks.
+         Positioned below the heading and above the map view.
+         Width and height are constrained for balance. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trucks_list"
         android:layout_width="410dp"
@@ -36,6 +43,9 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <!-- Map View -->
+    <!-- This MapView shows a map to help users visualize truck locations.
+         Positioned at the bottom of the screen and spans the width of the screen.
+         Provides interactive map functionalities such as zoom and markers. -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="409dp"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,6 +10,7 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <!-- This LinearLayout centers its child elements vertically and horizontally within the ConstraintLayout -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -21,15 +23,18 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Profile Icon -->
+        <!-- Displays a user profile image or icon. Uses ShapeableImageView for advanced customization options. -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_image"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/baseline_account_circle_24"
             android:contentDescription="User profile icon"/>
-<!--            app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_LargeComponent" />-->
+        <!-- Optional style for round or customized image shape -->
+        <!-- app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_LargeComponent" -->
 
         <!-- Username Input Field -->
+        <!-- Provides an input field for the user to enter their username -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -44,6 +49,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Input Field -->
+        <!-- Provides an input field for the user to enter their password -->
+        <!-- Includes a password toggle to show or hide the password -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -59,6 +66,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Submit Button -->
+        <!-- A button that triggers the login process -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:layout_width="wrap_content"

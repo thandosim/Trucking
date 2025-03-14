@@ -8,38 +8,42 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.GeoPoint
 
 // Data model for a Truck
+// Represents a truck with a name, location description, and geographical coordinates.
 data class Truck(
-    val name: String,
-    val locationName: String, // Example: "Location A"
-    val geoPoint: GeoPoint // Location of the truck (latitude and longitude)
+    val name: String,        // The name of the truck
+    val locationName: String, // A readable name or description of the truck's location
+    val geoPoint: GeoPoint    // Geographic coordinates (latitude and longitude) of the truck
 )
 
+// Adapter for displaying a list of Truck objects in a RecyclerView
 class TruckAdapter(private val trucks: List<Truck>) : RecyclerView.Adapter<TruckAdapter.TruckViewHolder>() {
 
-    // ViewHolder: Represents each item in the list
+    // ViewHolder: Manages and recycles the views for each item in the RecyclerView
     class TruckViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val truckName: TextView = itemView.findViewById(R.id.truck_name)
-        val truckLocationName: TextView = itemView.findViewById(R.id.truck_location)
-        val truckCoordinates: TextView = itemView.findViewById(R.id.truck_coordinates) // New TextView for coordinates
+        val truckName: TextView = itemView.findViewById(R.id.truck_name) // Displays the truck's name
+        val truckLocationName: TextView = itemView.findViewById(R.id.truck_location) // Displays the location description
+        val truckCoordinates: TextView = itemView.findViewById(R.id.truck_coordinates) // Displays latitude and longitude
     }
 
+    // Called when a new ViewHolder is created (inflates the item layout)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TruckViewHolder {
-        // Inflate the layout for each list item
+        // Inflate the layout XML for each truck item
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_truck, parent, false)
+            .inflate(R.layout.item_truck, parent, false) // Custom layout for the list item
         return TruckViewHolder(itemView)
     }
 
+    // Binds data from the Truck object to the views in the ViewHolder
     override fun onBindViewHolder(holder: TruckViewHolder, position: Int) {
-        // Bind data to the list item views
-        val truck = trucks[position]
-        holder.truckName.text = truck.name
-        holder.truckLocationName.text = truck.locationName
-        holder.truckCoordinates.text = "Lat: ${truck.geoPoint.latitude}, Lng: ${truck.geoPoint.longitude}" // Display coordinates
+        val truck = trucks[position] // Get the Truck object for the current position
+        holder.truckName.text = truck.name // Set the truck name in the TextView
+        holder.truckLocationName.text = truck.locationName // Set the location name in the TextView
+        holder.truckCoordinates.text = "Lat: ${truck.geoPoint.latitude}, Lng: ${truck.geoPoint.longitude}"
+        // Sets the coordinates in the TextView
     }
 
+    // Returns the total number of Truck items in the list
     override fun getItemCount(): Int {
-        // Return the total number of items in the data list
-        return trucks.size
+        return trucks.size // The size of the truck list
     }
 }
