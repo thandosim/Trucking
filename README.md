@@ -18,6 +18,16 @@ looking for transport for his goods.
 
 [Software Demo Video](https://youtu.be/RlfILEIjij0)
 
+# Cloud Database
+
+{Describe the cloud database you are using.}
+I am using Google Firebase
+{Describe the structure of the database that you created.}
+The Database has two tables. one is the users table which store data for the users, such as usernames and passwords and optionally stores the Name of the user. 
+The second table is the trucks table which stores the data about trucks including the name, location and geopoint data about the truck. 
+The app can create, modify, delete and view any of this data. 
+
+
 # Development Environment
 
 The app was developed on Android Studio Ladybug Feature Drop | 2024.2.2 Patch 
