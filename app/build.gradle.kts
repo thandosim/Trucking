@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.android.application) // Applies the Android application plugin
     alias(libs.plugins.kotlin.android)     // Applies the Kotlin Android plugin
+//    id("com.android.application") //had to comment out this line because build was failing with this was already done at line two error
+    id("com.google.gms.google-services")
 }
 
 // Android configuration block
@@ -54,10 +56,27 @@ dependencies {
 
     // Google Maps and Firebase integration
     implementation(libs.play.services.maps)        // Google Maps SDK for Android
-    implementation(libs.firebase.firestore.ktx)    // Firebase Firestore library for real-time database integration
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)    // Firebase Firestore library for real-time database integration
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Testing dependencies
     testImplementation(libs.junit)                 // JUnit for unit testing
     androidTestImplementation(libs.androidx.junit) // AndroidX JUnit extensions for Android testing
     androidTestImplementation(libs.androidx.espresso.core) // Espresso for UI testing
+
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
+    // Add the dependency for the Firebase Authentication library
+    implementation("com.google.firebase:firebase-auth")
+
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/truck_background">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="352dp"
+        android:layout_height="534dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="82dp">
+
+        <!-- Input for Proper Name -->
+        <EditText
+            android:id="@+id/proper_name_input"
+            android:layout_width="321dp"
+            android:layout_height="69dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Enter Proper Name" />
+
+        <Button
+            android:id="@+id/add_name_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Add Proper Name" />
+
+        <!-- Input for Changing Password -->
+        <EditText
+            android:id="@+id/new_password_input"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Enter New Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/change_password_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Change Password" />
+
+        <!-- Button to Delete Account -->
+        <Button
+            android:id="@+id/delete_account_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Delete Account" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

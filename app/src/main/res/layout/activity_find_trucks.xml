@@ -10,9 +10,6 @@
     tools:context=".FindTrucks">
 
     <!-- Heading -->
-    <!-- This TextView acts as the main heading for the screen.
-         It displays a bold and prominent title, "Find a Truck for Your Cargo."
-         Positioned at the top of the screen and centered horizontally. -->
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
@@ -24,36 +21,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="24dp" />
 
-    <!-- Placeholder List of Trucks -->
-    <!-- A RecyclerView used to display the list of available trucks.
-         Positioned below the heading and above the map view.
-         Width and height are constrained for balance. -->
+    <!-- RecyclerView for Truck List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trucks_list"
-        android:layout_width="410dp"
-        android:layout_height="279dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/map_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/heading"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@id/map_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible"/>
 
     <!-- Map View -->
-    <!-- This MapView shows a map to help users visualize truck locations.
-         Positioned at the bottom of the screen and spans the width of the screen.
-         Provides interactive map functionalities such as zoom and markers. -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
-        android:layout_width="409dp"
-        android:layout_height="295dp"
-        android:layout_marginBottom="84dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Map showing truck locations"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trucks_list"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

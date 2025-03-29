@@ -10,7 +10,7 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- This LinearLayout centers its child elements vertically and horizontally within the ConstraintLayout -->
+    <!-- Centered Layout for Login and Sign-Up Elements -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -23,18 +23,14 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Profile Icon -->
-        <!-- Displays a user profile image or icon. Uses ShapeableImageView for advanced customization options. -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_image"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/baseline_account_circle_24"
-            android:contentDescription="User profile icon"/>
-        <!-- Optional style for round or customized image shape -->
-        <!-- app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_LargeComponent" -->
+            android:contentDescription="User profile icon" />
 
         <!-- Username Input Field -->
-        <!-- Provides an input field for the user to enter their username -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -49,8 +45,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Input Field -->
-        <!-- Provides an input field for the user to enter their password -->
-        <!-- Includes a password toggle to show or hide the password -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -65,8 +59,7 @@
                 android:minHeight="70dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Submit Button -->
-        <!-- A button that triggers the login process -->
+        <!-- Login Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
@@ -74,9 +67,28 @@
             android:layout_marginTop="16dp"
             android:padding="8dp"
             android:text="Login"
-            app:cornerRadius="8dp"
-            style="@style/Widget.MaterialComponents.Button" />
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="8dp" />
 
+        <!-- Sign-Up Prompt -->
+        <TextView
+            android:id="@+id/no_account_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Don't have an account?"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <!-- Sign-Up Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sign Up"
+            style="@style/Widget.MaterialComponents.Button"
+            app:cornerRadius="8dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

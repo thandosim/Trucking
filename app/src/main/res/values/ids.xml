@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="update_truck_heading" type="id">@+id/update_truck_heading</item>
+    <item name="truck_name_input" type="id">@+id/truck_name_input</item>
+    <item name="location_name_input" type="id">@+id/location_name_input</item>
+    <item name="latitude_input" type="id">@+id/latitude_input</item>
+    <item name="longitude_input" type="id">@+id/longitude_input</item>
+    <item name="submit_button" type="id">@+id/submit_button</item>
+</resources>

@@ -9,54 +9,78 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 // MainActivity: Represents the login screen of the app
-// Allows users to log in with a username and password. Validates inputs and navigates to the homescreen on successful login.
+// Handles user authentication and navigation.
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Enables edge-to-edge design for a modern UI experience
-        enableEdgeToEdge()
-
-        // Sets the layout for the login screen
         setContentView(R.layout.activity_main)
 
-        // Apply padding dynamically to handle system bars (e.g., status bar, navigation bar)
+        // Initialize Firebase Authentication and Firestore
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
+        // Enables edge-to-edge design for a modern UI
+        enableEdgeToEdge()
+
+        // Dynamically adjust padding for system bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets // Return the insets to apply them
+            insets
         }
 
-        // Get references to input fields and button from the layout
-        val usernameInput = findViewById<EditText>(R.id.username_input) // Input for the username
-        val passwordInput = findViewById<EditText>(R.id.password_input) // Input for the password
-        val loginButton = findViewById<Button>(R.id.login_button)       // Button to trigger the login process
+        // Get references to UI elements
+        val usernameInput = findViewById<EditText>(R.id.username_input)
+        val passwordInput = findViewById<EditText>(R.id.password_input)
+        val loginButton = findViewById<Button>(R.id.login_button)
+        val signupButton = findViewById<Button>(R.id.signup_button)
 
-        // Set an OnClickListener for the login button
+        // Handle login button click
         loginButton.setOnClickListener {
-            val username = usernameInput.text.toString() // Get the entered username
-            val password = passwordInput.text.toString() // Get the entered password
+            val email = usernameInput.text.toString()
+            val password = passwordInput.text.toString()
 
-            // Validate the input fields to ensure they are not empty
-            if (username.isEmpty() || password.isEmpty()) {
-                // Display a Toast message if either field is empty
-                Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
             } else {
-                // Simple login processing logic for demonstration purposes
-                if (username == "admin" && password == "1234") {
-                    // Display a success message and navigate to the homescreen
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, homescreen::class.java) // Create intent to navigate
-                    intent.putExtra("USERNAME", username)             // Pass the username to the homescreen
-                    startActivity(intent)                             // Start the new activity
-                } else {
-                    // Display an error message for invalid credentials
-                    Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
-                }
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Store user data in Firestore
+                            val user = hashMapOf(
+                                "email" to email,
+                                "lastLogin" to System.currentTimeMillis()
+                            )
+                            firestore.collection("users").document(email)
+                                .set(user)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this, homescreen::class.java)
+                                    intent.putExtra("USERNAME", email)
+                                    startActivity(intent)
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Error saving user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        } else {
+                            Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
             }
+        }
+
+        // Handle sign-up button click
+        signupButton.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
         }
     }
 }

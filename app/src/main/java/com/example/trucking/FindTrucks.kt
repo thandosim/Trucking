@@ -1,6 +1,9 @@
 package com.example.trucking
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,98 +14,149 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
 class FindTrucks : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var recyclerView: RecyclerView
     private lateinit var truckAdapter: TruckAdapter
-
-    // Static GeoPoints for testing truck locations
-    private val geoPoint1 = GeoPoint(-26.305, 31.136) // Static test location 1
-    private val geoPoint2 = GeoPoint(-26.310, 31.140) // Static test location 2
-    private val geoPoint3 = GeoPoint(-26.315, 31.145) // Static test location 3
-
-    // List of trucks with test data for name, location, and GeoPoint
-    private val truckList = listOf(
-        Truck("Truck 1", "Location A", geoPoint1),
-        Truck("Truck 2", "Location B", geoPoint2),
-        Truck("Truck 3", "Location C", geoPoint3)
-    )
+    private val truckList = mutableListOf<Truck>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge() // Enables edge-to-edge UI styling
         setContentView(R.layout.activity_find_trucks)
 
-        // Initialize the RecyclerView for displaying the list of trucks
+        // Initialize the RecyclerView
         recyclerView = findViewById(R.id.trucks_list)
-        truckAdapter = TruckAdapter(truckList) // Pass the truck list to the adapter
-        recyclerView.layoutManager = LinearLayoutManager(this) // Set layout manager
-        recyclerView.adapter = truckAdapter // Bind adapter to RecyclerView
+        truckAdapter = TruckAdapter(this, truckList, { truck ->
+            // Handle item click
+            val latLng = LatLng(truck.geoPoint.latitude, truck.geoPoint.longitude)
+            mapView.getMapAsync { googleMap ->
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+            }
+        }, { deletedTruck ->
+            // Handle truck deletion
+            mapView.getMapAsync { googleMap ->
+                googleMap.clear() // Clear all markers
+                addMarkersToMap(googleMap, truckList.filter { it.name != deletedTruck.name }) // Re-add remaining markers
+            }
+        })
 
-        // Initialize MapView for displaying the map
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = truckAdapter
+
+        // Confirm RecyclerView space
+        recyclerView.post {
+            Log.d("FindTrucks", "RecyclerView dimensions: ${recyclerView.width}x${recyclerView.height}")
+            if (recyclerView.width == 0 || recyclerView.height == 0) {
+                Log.e("FindTrucks", "RecyclerView has no allocated space. Check layout constraints.")
+            }
+        }
+
+        // Initialize the MapView
         mapView = findViewById(R.id.map_view)
-        mapView.onCreate(savedInstanceState) // Restore the map's state
-        mapView.getMapAsync(this) // Load the map asynchronously
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        // Test with dummy data
+        testWithDummyData()
+
+        // Fetch truck data dynamically from Firestore
+        fetchTrucksFromFirestore()
+    }
+
+    private fun fetchTrucksFromFirestore() {
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("trucks")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val trucks = snapshot.documents.mapNotNull { doc ->
+                    val name = doc.getString("name")
+                    val location = doc.getString("location")
+                    val geoPoint = doc.getGeoPoint("geoPoint")
+                    if (name != null && location != null && geoPoint != null) {
+                        Truck(name, location, geoPoint)
+                    } else null
+                }
+
+                // Log for data confirmation
+                Log.d("FindTrucks", "Fetched ${trucks.size} trucks from Firestore")
+
+                // Update RecyclerView and MapView
+                truckList.clear()
+                truckList.addAll(trucks)
+                truckAdapter.updateTrucks(trucks) // Update RecyclerView
+                mapView.getMapAsync { googleMap ->
+                    googleMap.clear()
+                    addMarkersToMap(googleMap, trucks) // Add markers for trucks
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to load trucks: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        // Loop through the truck list and add a marker for each truck
-        for (truck in truckList) {
-            addTruckMarker(googleMap, truck)
+        googleMap.setOnMarkerClickListener { marker ->
+            Toast.makeText(this, "Clicked on ${marker.title}: ${marker.snippet}", Toast.LENGTH_SHORT).show()
+            true
         }
-
-        // Center the camera on the first truck's location
-        val firstLocation = LatLng(geoPoint1.latitude, geoPoint1.longitude)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 10f))
     }
 
-    /**
-     * Adds a marker on the map for the specified truck.
-     *
-     * @param googleMap The GoogleMap instance where the marker will be added.
-     * @param truck The truck object containing the name, location name, and coordinates.
-     */
-    private fun addTruckMarker(googleMap: GoogleMap, truck: Truck) {
-        val latLng = LatLng(truck.geoPoint.latitude, truck.geoPoint.longitude) // Convert GeoPoint to LatLng
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(latLng) // Set marker position
-                .title(truck.name) // Set marker title (truck name)
-                .snippet(truck.locationName) // Set marker snippet (truck location name)
+    private fun addMarkersToMap(googleMap: GoogleMap, trucks: List<Truck>) {
+        for (truck in trucks) {
+            val latLng = LatLng(truck.geoPoint.latitude, truck.geoPoint.longitude)
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .title(truck.name)
+                    .snippet(truck.locationName)
+            )
+        }
+    }
+
+    // Test with dummy data
+    private fun testWithDummyData() {
+        val dummyTrucks = listOf(
+            Truck("Truck A", "Johannesburg Logistics Hub", GeoPoint(-26.2041, 28.0473)),
+            Truck("Truck B", "Durban Port Terminal", GeoPoint(-29.8587, 31.0218)),
+            Truck("Truck C", "Windhoek Transport Depot", GeoPoint(-22.5609, 17.0658))
         )
+        Log.d("FindTrucks", "Testing RecyclerView with dummy data")
+        truckAdapter.updateTrucks(dummyTrucks) // Populate RecyclerView with dummy data
     }
 
-    // MapView Lifecycle Methods to handle proper map rendering and cleanup
-
+    // MapView lifecycle methods
     override fun onStart() {
         super.onStart()
-        mapView.onStart() // Start the MapView
+        mapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume() // Resume the MapView
+        mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause() // Pause the MapView
+        mapView.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop() // Stop the MapView
+        mapView.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy() // Destroy the MapView resources
+        mapView.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory() // Handle low memory situations
+        mapView.onLowMemory()
     }
 }

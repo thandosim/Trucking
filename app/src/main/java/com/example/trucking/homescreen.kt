@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 
 // Activity: Homescreen
 // Represents the main landing screen of the application, providing options to navigate to
-// "Find Trucks" or "Find Your Cargo" features.
+// "Find Trucks", "Find Your Cargo", "Update Locations", and "Manage Account" features.
 class homescreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +48,29 @@ class homescreen : AppCompatActivity() {
         findCargoButton.setOnClickListener {
             // Show a Toast message indicating that the feature is not yet implemented
             Toast.makeText(this, "The 'Find Your Cargo' feature is coming soon!", Toast.LENGTH_LONG).show()
+        }
+
+        // Initialize and set up the "Update Truck Location" button
+        val updateTruckButton = findViewById<Button>(R.id.update_truck_location_button)
+        updateTruckButton.setOnClickListener {
+            // Navigate to the UpdateTruck activity when the button is clicked
+            val intent = Intent(this, UpdateTruckActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Initialize and set up the "Update Cargo Location" button
+        val updateCargoButton = findViewById<Button>(R.id.update_cargo_location_button)
+        updateCargoButton.setOnClickListener {
+            // Show a Toast message indicating that the feature is not yet implemented
+            Toast.makeText(this, "The 'Update Cargo Location' feature is coming soon!", Toast.LENGTH_LONG).show()
+        }
+
+        // Initialize and set up the "Manage Account" button
+        val manageAccountButton = findViewById<Button>(R.id.manage_account_button)
+        manageAccountButton.setOnClickListener {
+            // Navigate to the AccountManagement activity when the button is clicked
+            val intent = Intent(this, AccountManagementActivity::class.java)
+            startActivity(intent)
         }
     }
 }

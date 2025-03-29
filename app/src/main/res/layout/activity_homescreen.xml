@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,23 +7,19 @@
     android:background="@drawable/truck_background"
     android:padding="16dp"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".homescreen">
 
     <!-- Root LinearLayout -->
-    <!-- Serves as the main layout for the home screen.
-         It has a vertical orientation to stack child components from top to bottom.
-         The truck background drawable is applied for design consistency. -->
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
 
         <!-- Profile Image -->
-        <!-- Displays a profile image or icon at the top of the screen.
-             The content description ensures accessibility for users with assistive devices. -->
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="120dp"
@@ -34,39 +29,68 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp" />
 
-        <!-- Buttons Container -->
-        <!-- Contains two buttons (Find Trucks and Find Cargo) aligned horizontally.
-             Spacing and alignment provide a user-friendly interface for navigation. -->
+        <!-- First Row: Find Buttons -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="16dp">
 
             <!-- Button: Find Trucks -->
-            <!-- Navigates to the Find Trucks screen.
-                 The layout weight ensures equal spacing with the "Find Cargo" button. -->
             <Button
                 android:id="@+id/find_trucks_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Find Trucks"
                 android:padding="16dp"
                 android:layout_marginEnd="8dp" />
 
             <!-- Button: Find Cargo -->
-            <!-- Will eventually navigate to the Find Cargo screen.
-                 A placeholder for future functionality. -->
             <Button
                 android:id="@+id/find_cargo_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Find Cargo"
                 android:padding="16dp"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
+        <!-- Second Row: Update Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <!-- Button: Update Truck Location -->
+            <Button
+                android:id="@+id/update_truck_location_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:padding="16dp"
+                android:text="Update Truck Location" />
+
+            <!-- Button: Update Cargo Location -->
+            <Button
+                android:id="@+id/update_cargo_location_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Cargo Location"
+                android:padding="16dp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Manage Account Button -->
+        <Button
+            android:id="@+id/manage_account_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage Account"
+            android:layout_marginTop="24dp"
+            android:padding="16dp"
+            android:layout_gravity="center" />
     </LinearLayout>
 </LinearLayout>
