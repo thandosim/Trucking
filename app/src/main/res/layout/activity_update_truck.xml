@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!-- Displays the heading for the Update Truck Location screen -->
     <TextView
         android:id="@+id/update_truck_heading"
         android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- Truck Name Input -->
+    <!-- Input field for entering the truck name -->
     <EditText
         android:id="@+id/truck_name_input"
         android:layout_width="0dp"
@@ -31,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Location Name Input -->
+    <!-- Input field for entering the location name -->
     <EditText
         android:id="@+id/location_name_input"
         android:layout_width="0dp"
@@ -44,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Latitude Input -->
+    <!-- Input field for entering the latitude -->
     <EditText
         android:id="@+id/latitude_input"
         android:layout_width="0dp"
@@ -57,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Longitude Input -->
+    <!-- Input field for entering the longitude -->
     <EditText
         android:id="@+id/longitude_input"
         android:layout_width="0dp"
@@ -70,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Progress Bar -->
+    <!-- Displays a progress bar while the update is being processed -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
         android:layout_marginTop="16dp"
         android:visibility="gone" />
 
-    <!-- Submit Button -->
+    <!-- Button for submitting the updated location details -->
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"

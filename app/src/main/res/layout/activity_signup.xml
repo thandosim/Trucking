@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/truck_background"
     tools:context=".SignupActivity">
 
-    <!-- Email Input Field -->
+    <!-- Input field for entering an email address -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
         android:hint="Enter Email"
         android:layout_marginTop="128dp">
 
+        <!-- Actual email entry field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_input"
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password Input Field -->
+    <!-- Input field for entering a password -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_input_layout"
         android:layout_width="match_parent"
@@ -33,6 +34,7 @@
         app:endIconMode="password_toggle"
         android:layout_marginTop="16dp">
 
+        <!-- Actual password entry field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_input"
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Sign-Up Button -->
+    <!-- Button to submit the sign-up form -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submit_signup_button"
         android:layout_width="wrap_content"
@@ -50,12 +52,12 @@
         android:text="Sign Up"
         style="@style/Widget.MaterialComponents.Button" />
 
+    <!-- Displays a progress bar when loading, hidden by default -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
-
 
 </LinearLayout>

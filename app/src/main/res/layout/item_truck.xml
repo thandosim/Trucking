@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <!-- Truck Name -->
+    <!-- Displays the truck's name in bold and orange text -->
     <TextView
         android:id="@+id/truck_name_text"
         android:layout_width="0dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_delete" />
 
-    <!-- Truck Location -->
+    <!-- Displays the location of the truck in smaller orange text -->
     <TextView
         android:id="@+id/truck_location_text"
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/truck_name_text"
         app:layout_constraintEnd_toStartOf="@id/button_delete" />
 
-    <!-- Truck GeoPoint -->
+    <!-- Displays the geographical coordinates of the truck -->
     <TextView
         android:id="@+id/truck_geopoint_text"
         android:layout_width="0dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/truck_location_text"
         app:layout_constraintEnd_toStartOf="@id/button_delete" />
 
-    <!-- Delete Button -->
+    <!-- Button to delete the truck entry -->
     <Button
         android:id="@+id/button_delete"
         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!-- Update Button -->
+    <!-- Button to update the truck details -->
     <Button
         android:id="@+id/button_update"
         android:layout_width="wrap_content"
